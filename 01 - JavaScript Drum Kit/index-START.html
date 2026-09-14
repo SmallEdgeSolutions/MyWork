@@ -59,9 +59,26 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-
+  function playSound(){
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
+    if(!audio) return
+    audio.currentTime = 0
+    audio.play()
+    key.classList.add('playing')
+  } 
+  
+  function removeTransition(e){
+    if(e.propertyName !== 'transform') return
+    this.classList.remove('playing')
+  }
+  const keys = document.querySelectorAll('.key')
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition))
+  window.addEventListener('keydown',playSound)
 </script>
 
 
 </body>
 </html>
+
+<!-- What did I learn? I learned about key events and how to play audio although I would've still preferred to have a separate file for my JS, which I may come back to this and apply it -->
